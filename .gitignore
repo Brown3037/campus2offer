@@ -22,3 +22,5 @@ reviews/
 # 编译产物与已弃用的位图 PDF
 把经历变成证据-初稿.pdf
 assets/svg/*.pdf
+*.lof
+*.lot
