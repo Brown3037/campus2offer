@@ -3,11 +3,17 @@ name: Build PDF
 on:
   push:
     branches: [master, main]
-    paths-ignore:
-      - '**/*.md'
   pull_request:
     branches: [master, main]
   workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+env:
+  TEXFILE: 把经历变成证据-初稿.tex
+  PDFNAME: 把经历变成证据-初稿.pdf
 
 jobs:
   build:
@@ -15,22 +21,146 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.ref || github.ref_name }}
+          repository: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name || github.repository }}
+          token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Install TeX Live (with ctex + fonts)
+      # 机器人自己提交的 PDF 不再触发新一轮构建，避免死循环
+      - name: Guard against bot commits
+        id: guard
+        run: |
+          MSG=$(git log -1 --pretty=%s)
+          echo "message=$MSG"
+          if [[ "$MSG" == "[ci]"* ]]; then
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+            echo "检测到机器人提交，跳过构建"
+          else
+            echo "skip=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Install TeX Live, poppler, ImageMagick
+        if: steps.guard.outputs.skip != 'true'
         run: |
           sudo apt-get update -qq
           sudo apt-get install -y --no-install-recommends \
             texlive-xetex texlive-lang-chinese texlive-latex-extra \
-            texlive-fonts-recommended fonts-noto-cjk lmodern
+            texlive-fonts-recommended lmodern poppler-utils imagemagick
 
       - name: Compile (two passes)
+        if: steps.guard.outputs.skip != 'true'
         run: |
-          xelatex -interaction=nonstopmode -halt-on-error 把经历变成证据-初稿.tex
-          xelatex -interaction=nonstopmode -halt-on-error 把经历变成证据-初稿.tex
+          xelatex -interaction=nonstopmode -halt-on-error "$TEXFILE"
+          xelatex -interaction=nonstopmode -halt-on-error "$TEXFILE"
+          ls -lh "$PDFNAME"
 
-      - name: Upload PDF artifact
+      - name: Render every page to PNG
+        if: steps.guard.outputs.skip != 'true'
+        run: |
+          mkdir -p out/png
+          pdftoppm -r 110 -png "$PDFNAME" out/png/page
+          ls out/png | wc -l
+
+      - name: Contact sheet (all pages in one image)
+        if: steps.guard.outputs.skip != 'true'
+        run: |
+          montage out/png/page-*.png -tile 10x -geometry 160x+4+4 -background white out/montage.png
+          ls -lh out/montage.png
+
+      - name: Upload artifact
+        if: steps.guard.outputs.skip != 'true'
         uses: actions/upload-artifact@v4
         with:
           name: book-pdf
-          path: 把经历变成证据-初稿.pdf
+          path: |
+            ${{ env.PDFNAME }}
+            out/montage.png
+            out/png/
           if-no-files-found: error
+
+      # ---------- PR：预览 + 把编译好的 PDF 写回 PR 分支 ----------
+      - name: Publish preview branch and comment
+        if: steps.guard.outputs.skip != 'true' && github.event_name == 'pull_request'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR: ${{ github.event.pull_request.number }}
+          REPO: ${{ github.repository }}
+          HEAD_REPO: ${{ github.event.pull_request.head.repo.full_name }}
+          HEAD_REF: ${{ github.event.pull_request.head.ref }}
+        run: |
+          PAGES=$(ls out/png | wc -l)
+          SIZE=$(du -h "$PDFNAME" | cut -f1)
+          PREFIX="https://raw.githubusercontent.com/$REPO/preview/pr-$PR"
+
+          # 预览分支：只存 PNG 与索引页，不污染 PR 的 diff
+          if [ "$HEAD_REPO" = "$REPO" ]; then
+            TMP=$(mktemp -d)
+            cd "$TMP"
+            git init -q
+            git remote add origin "https://x-access-token:$GH_TOKEN@github.com/$REPO.git"
+            git fetch --depth=1 origin preview 2>/dev/null || true
+            git checkout -q preview 2>/dev/null || git checkout -q --orphan preview
+            git rm -rf . >/dev/null 2>&1 || true
+            mkdir -p "pr-$PR"
+            cp -r "$GITHUB_WORKSPACE/out/png/." "pr-$PR/"
+            cp "$GITHUB_WORKSPACE/out/montage.png" "pr-$PR/montage.png"
+            {
+              echo "<!doctype html><meta charset='utf-8'><title>PR #$PR preview</title>"
+              echo "<h1>PR #$PR 预览</h1><p>共 $PAGES 页</p><p><img src='montage.png' style='max-width:100%'></p><ul>"
+              for f in pr-$PR/page-*.png; do
+                b=$(basename "$f")
+                echo "<li><a href='$b'>$b</a></li>"
+              done
+              echo "</ul>"
+            } > "pr-$PR/index.html"
+            git add -A
+            git -c user.name='github-actions[bot]' -c user.email='41898282+github-actions[bot]@users.noreply.github.com' commit -q -m "[ci] preview pr-$PR"
+            git push -q -f origin preview
+            cd "$GITHUB_WORKSPACE"
+          fi
+
+          # 样式化评论：封面 + 抽样页内联，其余折叠
+          SAMPLE=$(ls out/png | awk 'NR%17==1' | head -6)
+          {
+            echo "## 编译通过 ✅"
+            echo ""
+            echo "| 项目 | 结果 |"
+            echo "|---|---|"
+            echo "| 页数 | $PAGES |"
+            echo "| PDF 大小 | $SIZE |"
+            echo "| 提交 | `$(git rev-parse --short HEAD)` |"
+            echo ""
+            echo "![全部页面]($PREFIX/montage.png)"
+            echo ""
+            for p in $SAMPLE; do
+              echo "![ $p ]($PREFIX/$p)"
+            done
+            echo ""
+            echo "<details><summary>所有页面（点开看单页 PNG）</summary>"
+            echo ""
+            echo "<ul>"
+            for p in $(ls out/png); do
+              echo "<li><a href='$PREFIX/$p'>$p</a></li>"
+            done
+            echo "</ul></details>"
+            echo ""
+            echo "完整 PDF 见 Actions 的 `book-pdf` artifact。"
+          } > comment.md
+
+          gh pr comment "$PR" --repo "$REPO" --body-file comment.md
+
+      - name: Commit compiled PDF back to the branch
+        if: steps.guard.outputs.skip != 'true'
+        env:
+          TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          if git diff --quiet -- "$PDFNAME"; then
+            echo "PDF 无变化，跳过提交"
+            exit 0
+          fi
+          git add "$PDFNAME"
+          git commit -q -m "[ci] 更新编译后的 PDF"
+          git push
