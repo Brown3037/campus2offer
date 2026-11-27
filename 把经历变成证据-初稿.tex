@@ -78,6 +78,13 @@
 \newtcolorbox{toolbox}{colback=white,colframe=teal!70!black,boxrule=0.8pt,arc=2mm,left=3mm,right=3mm,top=2mm,bottom=2mm}
 \setcounter{tocdepth}{1}
 \setcounter{secnumdepth}{3}
+% 留言板条目
+\newcommand{\boardentry}[3]{%
+  \par\addvspace{8pt}%
+  \noindent{\color{teal}\bfseries #1}\hfill{\footnotesize\color{ink!65}#2}\par\nobreak
+  \noindent #3\par
+  \vspace{4pt}\noindent{\color{ink!18}\rule{\linewidth}{0.3pt}}\par
+}
 \begin{document}
 \begin{titlepage}
 \thispagestyle{empty}
@@ -2074,6 +2081,38 @@ offer & 第 3 章、第 15 章、第 17 章 \\
 \item[统计口径] 国家统计局《中国统计年鉴》与年度“城镇单位就业人员平均工资”发布稿，用于工资比较的口径说明。
 \end{description}
 }
+
+
+\chapter{留言板}
+
+这本书的最后一页留给你。
+
+书里的方法再具体，也覆盖不了每个人的处境。所以最后几页不放结论，只留几句话：已经写下来的，和还没写的。
+
+\input{messages.tex}
+
+\section*{如果你也想留一条}
+在仓库里打开 \texttt{messages.tex}，照着已有格式加一行，发一个 PR 就行：一句话，60 字以内，署名可以写昵称，也可以写「一位大二读者」或者直接匿名。合并之后，你的话会排进下一版 PDF。
+
+如果你手上是纸书，下面这几行是留给你的。
+
+\clearpage
+\section*{手写区}
+
+\newcommand{\boardslot}{%
+  \par\vspace{0.5cm}%
+  \noindent 留言：\rule{0.78\linewidth}{0.4pt}\par
+  \vspace{0.85cm}\noindent\rule{\linewidth}{0.4pt}\par
+  \vspace{0.85cm}\noindent\rule{\linewidth}{0.4pt}\par
+  \vspace{0.85cm}\noindent\rule{\linewidth}{0.4pt}\par
+  \vspace{0.35cm}\noindent 署名：\rule{0.28\linewidth}{0.4pt}\quad 时间：\rule{0.2\linewidth}{0.4pt}\par
+}
+
+\boardslot
+\boardslot
+
+\vfill
+{\small\color{ink!70}写完了想给作者看，也可以拍张照发到 X（@sundayai\_）；下一版会把有意思的几条排进来。\par}
 
 
 \end{document}
