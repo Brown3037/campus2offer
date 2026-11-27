@@ -14,6 +14,8 @@ permissions:
 env:
   TEXFILE: 把经历变成证据-初稿.tex
   PDFNAME: 把经历变成证据-初稿.pdf
+  # fork 来的 PR 只有只读 token：能编译、能出 artifact，但不能推预览分支或回写 PDF
+  SAME_REPO: ${{ github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository }}
 
 jobs:
   build:
@@ -35,7 +37,7 @@ jobs:
           echo "message=$MSG"
           if [[ "$MSG" == "[ci]"* ]]; then
             echo "skip=true" >> "$GITHUB_OUTPUT"
-            echo "检测到机器人提交，跳过构建"
+            echo "机器人提交，跳过构建"
           else
             echo "skip=false" >> "$GITHUB_OUTPUT"
           fi
@@ -60,13 +62,11 @@ jobs:
         run: |
           mkdir -p out/png
           pdftoppm -r 110 -png "$PDFNAME" out/png/page
-          ls out/png | wc -l
+          echo "pages: $(ls out/png | wc -l)"
 
-      - name: Contact sheet (all pages in one image)
+      - name: Contact sheet
         if: steps.guard.outputs.skip != 'true'
-        run: |
-          montage out/png/page-*.png -tile 10x -geometry 160x+4+4 -background white out/montage.png
-          ls -lh out/montage.png
+        run: montage out/png/page-*.png -tile 10x -geometry 160x+4+4 -background white out/montage.png
 
       - name: Upload artifact
         if: steps.guard.outputs.skip != 'true'
@@ -79,81 +79,73 @@ jobs:
             out/png/
           if-no-files-found: error
 
-      # ---------- PR：预览 + 把编译好的 PDF 写回 PR 分支 ----------
-      - name: Publish preview branch and comment
-        if: steps.guard.outputs.skip != 'true' && github.event_name == 'pull_request'
+      # ---------- 同一个仓库的 PR：预览分支 + 评论 ----------
+      - name: Publish preview branch
+        if: steps.guard.outputs.skip != 'true' && github.event_name == 'pull_request' && env.SAME_REPO == 'true'
+        env:
+          TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR: ${{ github.event.pull_request.number }}
+          REPO: ${{ github.repository }}
+        run: |
+          TMP=$(mktemp -d); cd "$TMP"
+          git init -q
+          git remote add origin "https://x-access-token:$TOKEN@github.com/$REPO.git"
+          git fetch --depth=1 origin preview 2>/dev/null || true
+          git checkout -q preview 2>/dev/null || git checkout -q --orphan preview
+          git rm -rf . >/dev/null 2>&1 || true
+          mkdir -p "pr-$PR"
+          cp -r "$GITHUB_WORKSPACE/out/png/." "pr-$PR/"
+          cp "$GITHUB_WORKSPACE/out/montage.png" "pr-$PR/montage.png"
+          {
+            echo "<!doctype html><meta charset='utf-8'><title>PR #$PR</title>"
+            echo "<h1>PR #$PR 预览</h1>"
+            echo "<p><img src='montage.png' style='max-width:100%'></p><ul>"
+            for f in pr-$PR/page-*.png; do b=$(basename "$f"); echo "<li><a href='$b'>$b</a></li>"; done
+            echo "</ul>"
+          } > "pr-$PR/index.html"
+          git add -A
+          git -c user.name='github-actions[bot]' -c user.email='41898282+github-actions[bot]@users.noreply.github.com' commit -q -m "[ci] preview pr-$PR"
+          git push -q -f origin preview
+
+      - name: Comment preview on PR
+        if: steps.guard.outputs.skip != 'true' && github.event_name == 'pull_request' && env.SAME_REPO == 'true'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PR: ${{ github.event.pull_request.number }}
           REPO: ${{ github.repository }}
-          HEAD_REPO: ${{ github.event.pull_request.head.repo.full_name }}
-          HEAD_REF: ${{ github.event.pull_request.head.ref }}
         run: |
           PAGES=$(ls out/png | wc -l)
           SIZE=$(du -h "$PDFNAME" | cut -f1)
+          SHA=$(git rev-parse --short HEAD)
           PREFIX="https://raw.githubusercontent.com/$REPO/preview/pr-$PR"
-
-          # 预览分支：只存 PNG 与索引页，不污染 PR 的 diff
-          if [ "$HEAD_REPO" = "$REPO" ]; then
-            TMP=$(mktemp -d)
-            cd "$TMP"
-            git init -q
-            git remote add origin "https://x-access-token:$GH_TOKEN@github.com/$REPO.git"
-            git fetch --depth=1 origin preview 2>/dev/null || true
-            git checkout -q preview 2>/dev/null || git checkout -q --orphan preview
-            git rm -rf . >/dev/null 2>&1 || true
-            mkdir -p "pr-$PR"
-            cp -r "$GITHUB_WORKSPACE/out/png/." "pr-$PR/"
-            cp "$GITHUB_WORKSPACE/out/montage.png" "pr-$PR/montage.png"
-            {
-              echo "<!doctype html><meta charset='utf-8'><title>PR #$PR preview</title>"
-              echo "<h1>PR #$PR 预览</h1><p>共 $PAGES 页</p><p><img src='montage.png' style='max-width:100%'></p><ul>"
-              for f in pr-$PR/page-*.png; do
-                b=$(basename "$f")
-                echo "<li><a href='$b'>$b</a></li>"
-              done
-              echo "</ul>"
-            } > "pr-$PR/index.html"
-            git add -A
-            git -c user.name='github-actions[bot]' -c user.email='41898282+github-actions[bot]@users.noreply.github.com' commit -q -m "[ci] preview pr-$PR"
-            git push -q -f origin preview
-            cd "$GITHUB_WORKSPACE"
-          fi
-
-          # 样式化评论：封面 + 抽样页内联，其余折叠
           SAMPLE=$(ls out/png | awk 'NR%17==1' | head -6)
           {
             echo "## 编译通过 ✅"
             echo ""
-            echo "| 项目 | 结果 |"
-            echo "|---|---|"
-            echo "| 页数 | $PAGES |"
-            echo "| PDF 大小 | $SIZE |"
-            echo "| 提交 | `$(git rev-parse --short HEAD)` |"
+            echo "| 页数 | PDF 大小 | 提交 |"
+            echo "|---|---|---|"
+            echo "| $PAGES | $SIZE | `$SHA` |"
             echo ""
             echo "![全部页面]($PREFIX/montage.png)"
             echo ""
-            for p in $SAMPLE; do
-              echo "![ $p ]($PREFIX/$p)"
-            done
+            for p in $SAMPLE; do echo "![ $p ]($PREFIX/$p)"; done
             echo ""
-            echo "<details><summary>所有页面（点开看单页 PNG）</summary>"
-            echo ""
-            echo "<ul>"
-            for p in $(ls out/png); do
-              echo "<li><a href='$PREFIX/$p'>$p</a></li>"
-            done
+            echo "<details><summary>全部 $PAGES 页（点开看单页 PNG）</summary><ul>"
+            for p in $(ls out/png); do echo "<li><a href='$PREFIX/$p'>$p</a></li>"; done
             echo "</ul></details>"
             echo ""
-            echo "完整 PDF 见 Actions 的 `book-pdf` artifact。"
+            echo "完整 PDF 见 Actions 的 `book-pdf` artifact；编译好的 PDF 会自动提交回本分支。"
           } > comment.md
-
           gh pr comment "$PR" --repo "$REPO" --body-file comment.md
 
+      - name: Note for fork PRs
+        if: steps.guard.outputs.skip != 'true' && github.event_name == 'pull_request' && env.SAME_REPO != 'true'
+        run: |
+          echo "::notice::来自 fork 的 PR：只做编译检查与 artifact，预览与自动回写需要维护者合并后在 master 上生成。"
+
+      # ---------- 编译通过后，把 PDF 写回分支 ----------
       - name: Commit compiled PDF back to the branch
-        if: steps.guard.outputs.skip != 'true'
-        env:
-          TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        if: steps.guard.outputs.skip != 'true' && env.SAME_REPO == 'true'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
