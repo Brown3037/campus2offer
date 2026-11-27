@@ -21,6 +21,7 @@
 \usepackage{enumitem}
 \usepackage{fancyhdr}
 \usepackage[linktoc=all]{hyperref}
+\usepackage{xurl}
 % 分页处的节标题锚点：在标题真正落页之后再建锚点，避免目录跳到前一页
 \makeatletter
 \let\ttl@select@orig\ttl@select
@@ -96,7 +97,7 @@
 \thispagestyle{empty}
 \centering
 \vspace*{0.6cm}
-{\color{teal!70}\rule{\textwidth}{0.5pt}}\par
+\noindent{\color{teal!70}\rule{\textwidth}{0.5pt}}\par
 \vspace{2.6cm}
 {\fontsize{34pt}{44pt}\selectfont\bfseries\color{ink} 把经历变成证据\par}
 \vspace{0.9cm}
@@ -112,7 +113,7 @@
 \vfill
 {\small\color{ink} 工作稿 v1.0\qquad 2026 年 11 月\par}
 \vspace{0.5cm}
-{\color{teal!70}\rule{\textwidth}{0.5pt}}
+\noindent{\color{teal!70}\rule{\textwidth}{0.5pt}}
 \end{titlepage}
 \thispagestyle{empty}
 \vspace*{3cm}
@@ -130,7 +131,7 @@
 \frontmatter
 \thispagestyle{empty}
 \vspace*{1.2cm}
-{\color{teal!70}\rule{\textwidth}{0.5pt}}\par
+\noindent\noindent{\color{teal!70}\rule{\textwidth}{0.5pt}}\par
 \vspace{1.4cm}
 {\Large\bfseries\color{ink} 作者}\par
 \vspace{0.8cm}
@@ -144,7 +145,7 @@
 他的判断很朴素：与其反复讨论“该选什么”，不如去做一个成本可承受的小实验，然后把结果记下来。书里所有的方法，都可以压缩成这一句。
 \end{minipage}
 \vfill
-{\color{teal!70}\rule{\textwidth}{0.5pt}}
+\noindent{\color{teal!70}\rule{\textwidth}{0.5pt}}
 \clearpage
 
 \chapter*{给读者的信}
@@ -2080,8 +2081,8 @@ offer & 第 3 章、第 15 章、第 17 章 \\
 \item[就业手续] 国务院办公厅《关于进一步做好高校毕业生等青年就业创业工作的通知》（国办发〔2022〕13 号）：取消就业报到证，2023 届起不再发放。
 \item[竞业限制] 最高人民法院《关于审理劳动争议案件适用法律问题的解释（一）》第三十六至三十八条：竞业限制补偿与违约金的规定。
 \item[招聘数据] 猎聘大数据、智联招聘、脉脉相关数据，转引自 TechWeb 2026 年 7 月 6 日报道，原报告未公开全文。
-\item[简历与面试] 各公司校招公告与岗位说明书（2025--2026 年公开版本），用于岗位要求与流程描述。\item[学生手册] 《上海交通大学学生生存手册》（SurviveSJTUManual，2008 年初版，后续由学生维护更新），https://github.com/1638410/SurviveSJTUManual/blob/master/；书中引用了“高考思维”“被动思维”“悲壮的学习方式”“你的身价是多少”“认识信息素养”“反对 PUA”“小心项目的陷阱”“进度控制”等章节。
 \item[简历与面试] 各公司校招公告与岗位说明书（2025--2026 年公开版本），用于岗位要求与流程描述。
+\item[学生手册] 《上海交通大学学生生存手册》（SurviveSJTUManual，2008 年初版，后续由学生维护更新），https://github.com/1638410/SurviveSJTUManual/blob/master/；书中引用了“高考思维”“被动思维”“悲壮的学习方式”“你的身价是多少”“认识信息素养”“反对 PUA”“小心项目的陷阱”“进度控制”等章节。
 \item[GitHub] GitHub，Octoverse 2024：AI 推动 Python 成为使用最多的语言，全球开发者数量继续增长。\url{https://github.blog/news-insights/octoverse/octoverse-2024/}
 \item[开源许可] 开源促进会（OSI）许可证清单与各项目 LICENSE 文件，用于“可带走的能力与不可带走的数据”一节。
 \item[统计口径] 国家统计局《中国统计年鉴》与年度“城镇单位就业人员平均工资”发布稿，用于工资比较的口径说明。

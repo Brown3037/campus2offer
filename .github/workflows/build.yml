@@ -58,15 +58,31 @@ jobs:
           xelatex -interaction=nonstopmode -halt-on-error "$TEXFILE"
           ls -lh "$PDFNAME"
 
-      - name: Check Chinese glyphs are embedded
+      - name: Check every character renders
         if: steps.guard.outputs.skip != 'true'
         run: |
+          LOG=$(basename "$TEXFILE" .tex).log
+          MISSING=$(grep -c 'Missing character' "$LOG" || true)
+          echo "missing character warnings: $MISSING"
+          if [ "$MISSING" != "0" ]; then
+            grep -A1 'Missing character' "$LOG" | head -24
+            echo "::error::有字符缺字形，PDF 里会是空白；检查字体是否覆盖这些字符"
+            exit 1
+          fi
+
           FONTS=$(pdffonts "$PDFNAME" | awk 'NR>2 {print $1}')
           echo "$FONTS"
           if ! echo "$FONTS" | grep -qiE 'CJK|Fandol|Noto|SimSun|Song|Hei'; then
-            echo "::error::PDF 里没有中文字体，中文会是空白——检查 CI 是否装了 fonts-noto-cjk"
+            echo "::error::PDF 里没有中文字体，中文会是空白——检查是否装了 fonts-noto-cjk"
             exit 1
           fi
+
+          if ! pdftotext "$PDFNAME" - | grep -q '把经历变成证据'; then
+            echo "::error::PDF 里的中文提取不出来，可能渲染成了空白"
+            exit 1
+          fi
+
+          echo "overfull hbox warnings: $(grep -c 'Overfull \hbox' "$LOG" || true)"
 
       - name: Render every page to PNG
         if: steps.guard.outputs.skip != 'true'
