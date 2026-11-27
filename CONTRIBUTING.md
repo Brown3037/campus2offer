@@ -65,7 +65,7 @@ xelatex 把经历变成证据-初稿.tex
 2. **把每一页渲染成 PNG 并把预览贴到 PR 评论里**（封面 + 抽样页内联，全部页面折叠展开），不下载 PDF 也能看版面；
 3. **编译通过后，把新 PDF 写回你的分支**，提交信息以 `[ci]` 开头，会替换仓库里的旧 PDF。
 
-fork 来的 PR 因为权限限制（只读 token），只能做第 1、2 步，PDF 会以 artifact 形式提供；合并到 master 后，master 上的 PDF 会自动更新。
+fork 来的 PR 因为权限限制（只读 token），只能做第 1、2 步，PDF 会以 artifact 形式提供；合并到 main 后，main 上的 PDF 会自动更新。
 
 ## 许可
 
