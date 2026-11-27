@@ -5,8 +5,11 @@ on:
     branches: [main]
     paths-ignore:
       - "**/*.md"
-      - "assets/**"
       - "cases/**"
+      - "jd/**"
+      - "projects/**"
+      - "scripts/**"
+      - "assets/png/**"
   pull_request:
     branches: [main]
   workflow_dispatch:
