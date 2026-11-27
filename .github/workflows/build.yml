@@ -163,9 +163,7 @@ jobs:
             gh release create latest --title "最新编译版（自动更新）" --notes "$NOTES" --latest
           fi
           cp "$PDFNAME" campus2offer-latest.pdf
-          gh release upload latest "$PDFNAME" --clobber
           gh release upload latest campus2offer-latest.pdf --clobber
-          gh release upload latest out/montage.png --clobber
       # ---------- 编译通过后，把 PDF 写回分支 ----------
       - name: Commit compiled PDF back to the branch
         if: steps.guard.outputs.skip != 'true' && env.SAME_REPO == 'true'
