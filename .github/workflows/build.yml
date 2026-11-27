@@ -188,6 +188,13 @@ jobs:
           - 提交：\`$SHA\`
           - 页数：$PAGES
           - 文件：$SIZE"
+          # 把 latest 标签强制移到本次提交，让 GitHub 自动生成的源码包跟着更新
+          git tag -f latest "$GITHUB_SHA" >/dev/null
+          git push -f origin refs/tags/latest >/dev/null 2>&1 || echo "标签移动失败（权限或分支保护）"
+
+          # 另外自己打一份源码包，保证资产里的源码永远是这次构建的代码
+          git archive --format=zip -o /tmp/campus2offer-src.zip HEAD
+
           if gh release view latest >/dev/null 2>&1; then
             gh release edit latest --title "最新编译版｜$PAGES 页｜$SHA｜$(TZ=Asia/Shanghai date '+%m-%d %H:%M') 北京" --notes "$NOTES" --latest
           else
@@ -195,3 +202,4 @@ jobs:
           fi
           cp "$PDFNAME" campus2offer-latest.pdf
           gh release upload latest campus2offer-latest.pdf --clobber
+          gh release upload latest /tmp/campus2offer-src.zip --clobber
