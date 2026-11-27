@@ -11,7 +11,7 @@
 - **最新编译版（PDF）**：[Releases · latest](https://github.com/returnSGD/campus2offer/releases/latest)
 - 直链：`https://github.com/returnSGD/campus2offer/releases/latest/download/campus2offer-latest.pdf`
 
-每次 `main` 有更新，CI 会重新编译并把 PDF 传到这个 release（标题带“自动更新”，同时保留一份中文文件名）。
+**仓库里不存 PDF。** 每次 `main` 有更新（包括合并 PR），CI 会重新编译并覆盖这个 release 的 PDF；想看旧版就翻 Releases 历史或 Actions 的 artifact。这样贡献者改 `.tex` 时不会和编译产物打架。
 这本书写给计算机大类的高中生、本科生和应届生：从选专业、看培养方案、做第一个真实项目，到写简历、面试、选 offer、入职前九十天。它不承诺 offer，只提供一套更可靠的工作方式——**先把问题说清楚，做一个成本可承受的实验，进入真实环境，记录结果，再根据证据调整方向**。
 
 ## 这本书里有什么
@@ -25,7 +25,7 @@
 
 | 目的一 | 看这里 |
 |---|---|
-| 直接读书 | [把经历变成证据-初稿.pdf](./把经历变成证据-初稿.pdf) |
+| 直接读书 | [Releases · latest](https://github.com/returnSGD/campus2offer/releases/latest)（PDF 由 CI 自动发布） |
 | 改书稿 | [把经历变成证据-初稿.tex](./把经历变成证据-初稿.tex)（XeLaTeX + ctexbook） |
 | 参与贡献 | [CONTRIBUTING.md](./CONTRIBUTING.md) |
 | 看改动记录 | [编辑说明.md](./编辑说明.md) |

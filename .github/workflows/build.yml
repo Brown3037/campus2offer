@@ -164,16 +164,3 @@ jobs:
           fi
           cp "$PDFNAME" campus2offer-latest.pdf
           gh release upload latest campus2offer-latest.pdf --clobber
-      # ---------- 编译通过后，把 PDF 写回分支 ----------
-      - name: Commit compiled PDF back to the branch
-        if: steps.guard.outputs.skip != 'true' && env.SAME_REPO == 'true'
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          if git diff --quiet -- "$PDFNAME"; then
-            echo "PDF 无变化，跳过提交"
-            exit 0
-          fi
-          git add "$PDFNAME"
-          git commit -q -m "[ci] 更新编译后的 PDF"
-          git push
