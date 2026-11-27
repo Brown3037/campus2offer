@@ -48,7 +48,8 @@ jobs:
           sudo apt-get update -qq
           sudo apt-get install -y --no-install-recommends \
             texlive-xetex texlive-lang-chinese texlive-latex-extra \
-            texlive-fonts-recommended lmodern poppler-utils imagemagick
+            texlive-fonts-recommended texlive-lang-chinese lmodern \
+            fonts-noto-cjk fonts-liberation poppler-utils imagemagick
 
       - name: Compile (two passes)
         if: steps.guard.outputs.skip != 'true'
@@ -56,6 +57,16 @@ jobs:
           xelatex -interaction=nonstopmode -halt-on-error "$TEXFILE"
           xelatex -interaction=nonstopmode -halt-on-error "$TEXFILE"
           ls -lh "$PDFNAME"
+
+      - name: Check Chinese glyphs are embedded
+        if: steps.guard.outputs.skip != 'true'
+        run: |
+          FONTS=$(pdffonts "$PDFNAME" | awk 'NR>2 {print $1}')
+          echo "$FONTS"
+          if ! echo "$FONTS" | grep -qiE 'CJK|Fandol|Noto|SimSun|Song|Hei'; then
+            echo "::error::PDF 里没有中文字体，中文会是空白——检查 CI 是否装了 fonts-noto-cjk"
+            exit 1
+          fi
 
       - name: Render every page to PNG
         if: steps.guard.outputs.skip != 'true'
