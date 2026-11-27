@@ -189,9 +189,9 @@ jobs:
           - 页数：$PAGES
           - 文件：$SIZE"
           if gh release view latest >/dev/null 2>&1; then
-            gh release edit latest --title "最新编译版（自动更新）" --notes "$NOTES" --latest
+            gh release edit latest --title "最新编译版｜$PAGES 页｜$SHA｜$(date -u '+%m-%d %H:%M UTC')" --notes "$NOTES" --latest
           else
-            gh release create latest --title "最新编译版（自动更新）" --notes "$NOTES" --latest
+            gh release create latest --title "最新编译版｜$PAGES 页｜$SHA｜$(date -u '+%m-%d %H:%M UTC')" --notes "$NOTES" --latest
           fi
           cp "$PDFNAME" campus2offer-latest.pdf
           gh release upload latest campus2offer-latest.pdf --clobber
