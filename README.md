@@ -1,5 +1,7 @@
 # 把经历变成证据
 
+![Build PDF](https://github.com/returnSGD/campus2offer/actions/workflows/build.yml/badge.svg)
+
 **计算机学生的四年规划与求职实战**（工作稿 v1.0）
 
 > 把学习变成证据，把选择变成实验，把工作变成下一次选择的起点。
