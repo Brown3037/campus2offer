@@ -17,6 +17,7 @@
 \usepackage{xcolor}
 \usepackage{titlesec}
 \usepackage{tcolorbox}
+\tcbuselibrary{skins}
 \usepackage{booktabs,longtable,tabularx,array,multirow}
 \usepackage{enumitem}
 \usepackage{fancyhdr}
@@ -87,13 +88,27 @@
 \newtcolorbox{toolbox}{colback=white,colframe=teal!70!black,boxrule=0.8pt,arc=2mm,left=3mm,right=3mm,top=2mm,bottom=2mm}
 \setcounter{tocdepth}{1}
 \setcounter{secnumdepth}{3}
-% 留言板条目
-\newcommand{\boardentry}[3]{%
-  \par\addvspace{8pt}%
-  \noindent{\color{teal}\bfseries #1}\hfill{\footnotesize\color{ink!65}#2}\par\nobreak
-  \noindent #3\par
-  \vspace{4pt}\noindent{\color{ink!18}\rule{\linewidth}{0.3pt}}\par
-}
+% 留言板条目：\boardentry[color=…, size=12pt, font=\bfseries, indent=2cm, rotate=-2]{署名}{时间}{内容}
+\pgfkeys{/board/.is family, /board/.cd,
+  color/.initial=ink,
+  size/.initial=10.5pt,
+  font/.initial=\normalfont,
+  indent/.initial=0pt,
+  rotate/.initial=0,
+  gap/.initial=2pt}
+\newcommand{\boardentry}[4][]{%
+  \begingroup
+  \pgfkeys{/board/.cd,#1}%
+  \par\vspace{\pgfkeysvalueof{/board/gap}}%
+  \noindent\hspace*{\pgfkeysvalueof{/board/indent}}%
+  \rotatebox{\pgfkeysvalueof{/board/rotate}}{%
+    \parbox[t]{\dimexpr\linewidth-\pgfkeysvalueof{/board/indent}\relax}{%
+      \pgfkeysvalueof{/board/font}%
+      \fontsize{\pgfkeysvalueof{/board/size}}{\dimexpr\pgfkeysvalueof{/board/size}*6/5\relax}\selectfont
+      \color{\pgfkeysvalueof{/board/color}}%
+      #4\enspace{\scriptsize\color{ink!45}#2 · #3}}}%
+  \par
+  \endgroup}
 \begin{document}
 \begin{titlepage}
 \thispagestyle{empty}
@@ -2145,35 +2160,24 @@ offer & 第 3 章、第 15 章、第 17 章 \\
 
 \chapter{留言板}
 
-这本书的最后一页留给你。
+这本书的最后一页留给你。下面这些话是读者和作者随手写下的，位置、字号、颜色都不太一样——本来就是想说就说，不必排整齐。
 
-书里的方法再具体，也覆盖不了每个人的处境。所以最后几页不放结论，只留几句话：已经写下来的，和还没写的。
+\vspace{0.2cm}
 
 \input{messages.tex}
 
-\section*{如果你也想留一条}
-在仓库里打开 \texttt{messages.tex}，照着已有格式加一行，发一个 PR 就行：一句话，60 字以内，署名可以写昵称，也可以写「一位大二读者」或者直接匿名。合并之后，你的话会排进下一版 PDF。
+\vspace{0.25cm}
 
-如果你手上是纸书，下面这几行是留给你的。
-
-\clearpage
-\section*{手写区}
-
-\newcommand{\boardslot}{%
-  \par\vspace{0.5cm}%
-  \noindent 留言：\rule{0.78\linewidth}{0.4pt}\par
-  \vspace{0.85cm}\noindent\rule{\linewidth}{0.4pt}\par
-  \vspace{0.85cm}\noindent\rule{\linewidth}{0.4pt}\par
-  \vspace{0.85cm}\noindent\rule{\linewidth}{0.4pt}\par
-  \vspace{0.35cm}\noindent 署名：\rule{0.28\linewidth}{0.4pt}\quad 时间：\rule{0.2\linewidth}{0.4pt}\par
-}
-
-\boardslot
-\boardslot
-
-\vfill
-{\small\color{ink!70}写完了想给作者看，也可以拍张照发到 X（@sundayai\_）；下一版会把有意思的几条排进来。\par}
-
+\begin{tcolorbox}[enhanced, blanker, borderline={0.6pt}{0pt}{ink!25,dashed},
+  height=7.2cm, valign=top, left=8pt, right=8pt, top=6pt, bottom=6pt]
+{\footnotesize\color{ink!55}手写区：纸书读者可以直接写在这里。想说一句？打开仓库里的 \texttt{messages.tex} 加一行，发 PR 就行。\par}
+\vspace{0.5cm}
+{\color{ink!20}\dotfill\par}\vspace{0.6cm}
+{\color{ink!20}\dotfill\par}\vspace{0.6cm}
+{\color{ink!20}\dotfill\par}\vspace{0.6cm}
+{\color{ink!20}\dotfill\par}\vspace{0.6cm}
+{\color{ink!20}\dotfill\par}
+\end{tcolorbox}
 
 \end{document}
 
