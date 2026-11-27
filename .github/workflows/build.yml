@@ -50,6 +50,8 @@ jobs:
             texlive-xetex texlive-lang-chinese texlive-latex-extra \
             texlive-fonts-recommended texlive-lang-chinese lmodern \
             fonts-noto-cjk fonts-liberation poppler-utils imagemagick
+          echo "--- CJK font families ---"
+          fc-list :lang=zh family | sort -u | head -20
 
       - name: Compile (two passes)
         if: steps.guard.outputs.skip != 'true'
