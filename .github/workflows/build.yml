@@ -3,6 +3,10 @@ name: Build PDF
 on:
   push:
     branches: [main]
+    paths-ignore:
+      - "**/*.md"
+      - "assets/**"
+      - "cases/**"
   pull_request:
     branches: [main]
   workflow_dispatch:
