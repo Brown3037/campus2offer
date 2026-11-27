@@ -1,0 +1,20 @@
+# 构建产物
+tmp/
+*.aux
+*.toc
+*.out
+*.log
+*.synctex.gz
+
+# 审读报告（内部）
+reviews/
+
+# 原始素材（未授权公开）
+帖子*.txt
+帖子*.pdf
+帖子*.png
+采访.txt
+谈心.txt
+
+# 历史存档
+存档-*.pdf

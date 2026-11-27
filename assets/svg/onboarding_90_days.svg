@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 760" role="img" aria-labelledby="t d">
+<title id="t">入职90天循环</title><desc id="d">入职后的90天分为理解、交付、沉淀和复盘四个循环阶段。</desc><style>
+  .title{font-family:"Noto Sans SC","Microsoft YaHei",sans-serif;font-size:34px;font-weight:700;fill:#20354D}
+  .subtitle{font-family:"Noto Sans SC","Microsoft YaHei",sans-serif;font-size:18px;fill:#52677D}
+  .h{font-family:"Noto Sans SC","Microsoft YaHei",sans-serif;font-size:24px;font-weight:700;fill:#20354D}
+  .body{font-family:"Noto Sans SC","Microsoft YaHei",sans-serif;font-size:19px;fill:#20354D}
+  .small{font-family:"Noto Sans SC","Microsoft YaHei",sans-serif;font-size:16px;fill:#52677D}
+  .white{font-family:"Noto Sans SC","Microsoft YaHei",sans-serif;font-size:20px;font-weight:700;fill:#FFFFFF}
+  .line{stroke:#B9C8D6;stroke-width:3;fill:none}
+</style>
+<rect width="1200" height="760" rx="28" fill="#F7FAFC"/>
+<text x="70" y="70" class="title">入职 90 天：从接任务到留下资本</text><text x="70" y="106" class="subtitle">第一份工作的目标不是证明自己无所不能，而是建立可持续的交付与学习循环。</text>
+<circle cx="600" cy="405" r="170" fill="#EAF5F5" stroke="#95D2CC" stroke-width="4"/>
+<circle cx="600" cy="405" r="82" fill="#20354D"/><text x="600" y="393" text-anchor="middle" class="white">90 天</text><text x="600" y="425" text-anchor="middle" class="white">复盘</text>
+<path d="M600 235A170 170 0 0 1 770 405" stroke="#168C86" stroke-width="12" fill="none" stroke-linecap="round"/><path d="M770 405A170 170 0 0 1 600 575" stroke="#D9822B" stroke-width="12" fill="none" stroke-linecap="round"/><path d="M600 575A170 170 0 0 1 430 405" stroke="#6E5AA6" stroke-width="12" fill="none" stroke-linecap="round"/><path d="M430 405A170 170 0 0 1 600 235" stroke="#20354D" stroke-width="12" fill="none" stroke-linecap="round"/>
+<rect x="120" y="180" width="245" height="100" rx="18" fill="#EAF1F7"/><text x="145" y="220" class="h">0–30 天：理解</text><text x="145" y="253" class="small">业务、系统、权限、团队</text>
+<rect x="835" y="180" width="245" height="100" rx="18" fill="#E7F5F3"/><text x="860" y="220" class="h">31–60 天：交付</text><text x="860" y="253" class="small">小任务、反馈、质量闭环</text>
+<rect x="835" y="540" width="245" height="100" rx="18" fill="#FFF3E7"/><text x="860" y="580" class="h">61–90 天：沉淀</text><text x="860" y="613" class="small">文档、自动化、可交接成果</text>
+<rect x="120" y="540" width="245" height="100" rx="18" fill="#F0EDFA"/><text x="145" y="580" class="h">循环：复盘</text><text x="145" y="613" class="small">下一步、风险、学习计划</text>
+<path d="M365 230h85M750 230h85M835 590H750M450 590h-85" stroke="#52677D" stroke-width="4" fill="none"/>
+<text x="600" y="700" text-anchor="middle" class="subtitle">每一轮都留下：问题记录、责任边界、结果指标、可复用方法</text>
+</svg>

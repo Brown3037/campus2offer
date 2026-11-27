@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 760" role="img" aria-labelledby="t d">
+<title id="t">岗位与证据匹配矩阵</title><desc id="d">开发、算法、数据、研究、测试和产品技术岗位对应不同的核心证据。</desc><style>
+  .title{font-family:"Noto Sans SC","Microsoft YaHei",sans-serif;font-size:34px;font-weight:700;fill:#20354D}
+  .subtitle{font-family:"Noto Sans SC","Microsoft YaHei",sans-serif;font-size:18px;fill:#52677D}
+  .h{font-family:"Noto Sans SC","Microsoft YaHei",sans-serif;font-size:24px;font-weight:700;fill:#20354D}
+  .body{font-family:"Noto Sans SC","Microsoft YaHei",sans-serif;font-size:19px;fill:#20354D}
+  .small{font-family:"Noto Sans SC","Microsoft YaHei",sans-serif;font-size:16px;fill:#52677D}
+  .white{font-family:"Noto Sans SC","Microsoft YaHei",sans-serif;font-size:20px;font-weight:700;fill:#FFFFFF}
+  .line{stroke:#B9C8D6;stroke-width:3;fill:none}
+</style>
+<rect width="1200" height="760" rx="28" fill="#F7FAFC"/>
+<text x="70" y="70" class="title">岗位匹配矩阵</text><text x="70" y="106" class="subtitle">同一个经历放进不同岗位，证明力不同；先确定岗位，再准备证据。</text>
+<rect x="80" y="150" width="1040" height="520" rx="14" fill="#FFFFFF" stroke="#B9C8D6" stroke-width="2"/>
+<rect x="80" y="150" width="1040" height="62" rx="14" fill="#20354D"/>
+<text x="105" y="190" class="white">岗位</text><text x="270" y="190" class="white">第一证据</text><text x="550" y="190" class="white">第二证据</text><text x="820" y="190" class="white">常见误配</text>
+<g class="body">
+<line x1="80" y1="212" x2="1120" y2="212" class="line"/><line x1="80" y1="288" x2="1120" y2="288" class="line"/><line x1="80" y1="364" x2="1120" y2="364" class="line"/><line x1="80" y1="440" x2="1120" y2="440" class="line"/><line x1="80" y1="516" x2="1120" y2="516" class="line"/><line x1="80" y1="592" x2="1120" y2="592" class="line"/>
+<line x1="240" y1="150" x2="240" y2="670" class="line"/><line x1="520" y1="150" x2="520" y2="670" class="line"/><line x1="790" y1="150" x2="790" y2="670" class="line"/>
+<text x="105" y="260">开发</text><text x="265" y="245">上线并维护的</text><text x="265" y="274">工程项目</text><text x="545" y="245">代码质量、</text><text x="545" y="274">交付与协作</text><text x="815" y="245">只展示论文，</text><text x="815" y="274">不讲系统责任</text>
+<text x="105" y="336">算法</text><text x="265" y="321">建模、实验和</text><text x="265" y="350">指标改善</text><text x="545" y="321">数据处理、</text><text x="545" y="350">误差分析</text><text x="815" y="321">只列框架名，</text><text x="815" y="350">没有实验结果</text>
+<text x="105" y="412">数据</text><text x="265" y="397">数据管道、</text><text x="265" y="426">口径与质量</text><text x="545" y="397">业务指标、</text><text x="545" y="426">可复现查询</text><text x="815" y="397">只展示模型，</text><text x="815" y="426">不说明数据来源</text>
+<text x="105" y="488">研究</text><text x="265" y="473">高质量论文或</text><text x="265" y="502">完整研究项目</text><text x="545" y="473">假设、实验、</text><text x="545" y="502">结论与局限</text><text x="815" y="473">只有会议参加，</text><text x="815" y="502">没有实际产出</text>
+<text x="105" y="564">测试/质量</text><text x="265" y="549">测试策略、</text><text x="265" y="578">缺陷与回归</text><text x="545" y="549">自动化、监控、</text><text x="545" y="578">风险判断</text><text x="815" y="549">只写“认真负责”，</text><text x="815" y="578">没有质量证据</text>
+<text x="105" y="640">产品技术</text><text x="265" y="625">需求澄清与</text><text x="265" y="654">用户反馈</text><text x="545" y="625">取舍、协作、</text><text x="545" y="654">上线结果</text><text x="815" y="625">只讲创意，</text><text x="815" y="654">没有用户验证</text>
+</g>
+</svg>

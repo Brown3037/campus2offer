@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 760" role="img" aria-labelledby="t d">
+<title id="t">Offer 决策树</title><desc id="d">先检查硬约束，再检查岗位、团队、成长资本和个人生活约束，最后做 offer 决策。</desc><style>
+  .title{font-family:"Noto Sans SC","Microsoft YaHei",sans-serif;font-size:34px;font-weight:700;fill:#20354D}
+  .subtitle{font-family:"Noto Sans SC","Microsoft YaHei",sans-serif;font-size:18px;fill:#52677D}
+  .h{font-family:"Noto Sans SC","Microsoft YaHei",sans-serif;font-size:24px;font-weight:700;fill:#20354D}
+  .body{font-family:"Noto Sans SC","Microsoft YaHei",sans-serif;font-size:19px;fill:#20354D}
+  .small{font-family:"Noto Sans SC","Microsoft YaHei",sans-serif;font-size:16px;fill:#52677D}
+  .white{font-family:"Noto Sans SC","Microsoft YaHei",sans-serif;font-size:20px;font-weight:700;fill:#FFFFFF}
+  .line{stroke:#B9C8D6;stroke-width:3;fill:none}
+</style>
+<rect width="1200" height="760" rx="28" fill="#F7FAFC"/>
+<text x="70" y="70" class="title">Offer 决策树</text><text x="70" y="106" class="subtitle">薪资只是一个变量；先排除不能接受的风险，再比较可积累的资本。</text>
+<rect x="470" y="145" width="260" height="74" rx="18" fill="#20354D"/><text x="600" y="190" text-anchor="middle" class="white">拿到一份 Offer</text>
+<path d="M600 219v50M600 269H220M600 269H980M220 269v36M600 269v36M980 269v36" stroke="#52677D" stroke-width="4" fill="none"/>
+<rect x="90" y="305" width="260" height="82" rx="16" fill="#FFF3E7" stroke="#E9B77D" stroke-width="2"/><text x="220" y="340" text-anchor="middle" class="h">硬约束</text><text x="220" y="370" text-anchor="middle" class="small">合同、薪资、城市、合法合规</text>
+<rect x="470" y="305" width="260" height="82" rx="16" fill="#E7F5F3" stroke="#95D2CC" stroke-width="2"/><text x="600" y="340" text-anchor="middle" class="h">岗位证据</text><text x="600" y="370" text-anchor="middle" class="small">我能做什么，能学什么</text>
+<rect x="850" y="305" width="260" height="82" rx="16" fill="#F0EDFA" stroke="#B8AEE0" stroke-width="2"/><text x="980" y="340" text-anchor="middle" class="h">团队与产品</text><text x="980" y="370" text-anchor="middle" class="small">谁带我，解决什么问题</text>
+<path d="M220 387v54M600 387v54M980 387v54M220 441H600M600 441H980" stroke="#52677D" stroke-width="4" fill="none"/>
+<rect x="90" y="455" width="260" height="82" rx="16" fill="#EAF1F7" stroke="#B9C8D6" stroke-width="2"/><text x="220" y="490" text-anchor="middle" class="h">不能接受</text><text x="220" y="520" text-anchor="middle" class="small">直接排除，不用平均加权</text>
+<rect x="470" y="455" width="260" height="82" rx="16" fill="#EAF1F7" stroke="#B9C8D6" stroke-width="2"/><text x="600" y="490" text-anchor="middle" class="h">成长资本</text><text x="600" y="520" text-anchor="middle" class="small">能力、作品、方法、网络</text>
+<rect x="850" y="455" width="260" height="82" rx="16" fill="#EAF1F7" stroke="#B9C8D6" stroke-width="2"/><text x="980" y="490" text-anchor="middle" class="h">生活约束</text><text x="980" y="520" text-anchor="middle" class="small">时间、健康、家庭、城市</text>
+<path d="M600 537v45" stroke="#168C86" stroke-width="6" fill="none"/>
+<rect x="390" y="590" width="420" height="90" rx="20" fill="#168C86"/><text x="600" y="630" text-anchor="middle" class="white">做出自己的选择</text><text x="600" y="660" text-anchor="middle" class="white">写下理由、风险与复盘日期</text>
+</svg>

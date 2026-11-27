@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 720" role="img" aria-labelledby="t d">
+<title id="t">探索到收敛曲线</title><desc id="d">前期多方向探索，随后通过证据和期限逐步收敛到一条主航道，同时保留小比例兴趣探索。</desc><style>
+  .title{font-family:"Noto Sans SC","Microsoft YaHei",sans-serif;font-size:34px;font-weight:700;fill:#20354D}
+  .subtitle{font-family:"Noto Sans SC","Microsoft YaHei",sans-serif;font-size:18px;fill:#52677D}
+  .h{font-family:"Noto Sans SC","Microsoft YaHei",sans-serif;font-size:24px;font-weight:700;fill:#20354D}
+  .body{font-family:"Noto Sans SC","Microsoft YaHei",sans-serif;font-size:19px;fill:#20354D}
+  .small{font-family:"Noto Sans SC","Microsoft YaHei",sans-serif;font-size:16px;fill:#52677D}
+  .white{font-family:"Noto Sans SC","Microsoft YaHei",sans-serif;font-size:20px;font-weight:700;fill:#FFFFFF}
+  .line{stroke:#B9C8D6;stroke-width:3;fill:none}
+</style>
+<rect width="1200" height="720" rx="28" fill="#F7FAFC"/>
+<text x="70" y="72" class="title">从探索到收敛</text><text x="70" y="108" class="subtitle">探索不是拖延；收敛也不是把自己锁死。关键是设置证据、期限和退出条件。</text>
+<line x1="130" y1="570" x2="1080" y2="570" stroke="#52677D" stroke-width="3"/><line x1="130" y1="570" x2="130" y2="170" stroke="#52677D" stroke-width="3"/>
+<text x="1060" y="612" class="small">时间</text><text x="54" y="190" class="small" transform="rotate(-90 54 190)">方向数量</text>
+<path d="M150 500 C260 470 330 290 440 230 C535 180 620 220 720 330 C800 418 900 480 1045 510" fill="none" stroke="#168C86" stroke-width="9" stroke-linecap="round"/>
+<path d="M150 495 C240 465 310 410 390 365" fill="none" stroke="#95D2CC" stroke-width="5" stroke-dasharray="12 12"/>
+<path d="M150 505 C240 500 310 470 410 425" fill="none" stroke="#95D2CC" stroke-width="5" stroke-dasharray="12 12"/>
+<path d="M150 515 C245 520 330 505 430 470" fill="none" stroke="#95D2CC" stroke-width="5" stroke-dasharray="12 12"/>
+<path d="M150 520 C250 535 340 530 450 510" fill="none" stroke="#95D2CC" stroke-width="5" stroke-dasharray="12 12"/>
+<circle cx="305" cy="335" r="12" fill="#D9822B"/><circle cx="490" cy="230" r="12" fill="#D9822B"/><circle cx="720" cy="330" r="12" fill="#6E5AA6"/><circle cx="1045" cy="510" r="12" fill="#168C86"/>
+<rect x="170" y="175" width="210" height="90" rx="16" fill="#EAF1F7"/><text x="195" y="212" class="h">探索预算</text><text x="195" y="244" class="small">多做小实验，收集反馈</text>
+<rect x="445" y="145" width="250" height="100" rx="16" fill="#FFF3E7"/><text x="470" y="183" class="h">证据与期限</text><text x="470" y="216" class="small">决定何时继续、暂停或退出</text>
+<rect x="700" y="175" width="240" height="100" rx="16" fill="#F0EDFA"/><text x="725" y="213" class="h">主航道</text><text x="725" y="246" class="small">连续投入，形成代表作</text>
+<rect x="855" y="390" width="240" height="100" rx="16" fill="#E7F5F3"/><text x="880" y="428" class="h">小比例保留</text><text x="880" y="461" class="small">兴趣探索 ≤ 20%</text>
+<text x="165" y="650" class="small">不要问“哪个方向永远正确”</text><text x="755" y="650" class="small">要问“我能否用证据承诺下一阶段”</text>
+</svg>
