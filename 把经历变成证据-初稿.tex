@@ -1,12 +1,13 @@
 \documentclass[UTF8,zihao=5,openany]{ctexbook}
 \usepackage[paperwidth=170mm,paperheight=240mm,top=24mm,bottom=28mm,inner=26mm,outer=20mm,headheight=13pt,headsep=8pt,footskip=14pt]{geometry}
 \usepackage{fontspec}
-\setmainfont{Times New Roman}
-\setsansfont{Arial}
-\setmonofont{Consolas}
-\setCJKmainfont{SimSun}
-\setCJKsansfont{SimHei}
-\setCJKmonofont{SimSun}
+% 本地（Windows）用宋体 + Times New Roman；CI / Linux 下若缺字体则回落到 CTeX 默认（Fandol）
+\IfFontExistsTF{Times New Roman}{\setmainfont{Times New Roman}}{}
+\IfFontExistsTF{Arial}{\setsansfont{Arial}}{}
+\IfFontExistsTF{Consolas}{\setmonofont{Consolas}}{}
+\IfFontExistsTF{SimSun}{\setCJKmainfont{SimSun}}{}
+\IfFontExistsTF{SimHei}{\setCJKsansfont{SimHei}}{}
+\IfFontExistsTF{SimSun}{\setCJKmonofont{SimSun}}{}
 \usepackage{xcolor}
 \usepackage{titlesec}
 \usepackage{tcolorbox}
