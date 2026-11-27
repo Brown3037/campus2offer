@@ -68,9 +68,11 @@ xelatex 把经历变成证据-初稿.tex
 
 1. **先检查能不能编译**——两遍 `xelatex`，任何一处报错都会让检查失败，PR 会显示红叉；
 2. **把每一页渲染成 PNG 并把预览贴到 PR 评论里**（封面 + 抽样页内联，全部页面折叠展开），不下载 PDF 也能看版面；
-3. **编译通过后，把新 PDF 写回你的分支**，提交信息以 `[ci]` 开头，会替换仓库里的旧 PDF。
+3. **合并进 main 之后，自动编译并发布到 Releases**：`main` 上每次更新（包括合 PR），CI 都会重新编译、覆盖 Releases 里 `latest` 的 PDF，页数与提交号同步写进发布说明。
 
-fork 来的 PR 因为权限限制（只读 token），只能做第 1、2 步，PDF 会以 artifact 形式提供；合并到 main 后，main 上的 PDF 会自动更新。
+fork 来的 PR 因为权限限制（只读 token），只能做第 1、2 步；合并到 main 后同样会走第 3 步。
+
+仓库里不跟踪 PDF：编译产物只存在于 Releases 和 Actions artifact，这样改 `.tex` 的 PR 不会和二进制产物冲突。
 
 ## 许可
 
