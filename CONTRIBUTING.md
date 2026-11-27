@@ -58,6 +58,8 @@ xelatex 把经历变成证据-初稿.tex
 xelatex 把经历变成证据-初稿.tex
 ```
 
+**改完不要手动提交 PDF。** CI 会自动编译并提交，手动提交的 PDF 会和机器人提交的版本产生二进制冲突。
+
 ## CI 会替你做三件事
 
 每次提交 PR，GitHub Actions 会：
