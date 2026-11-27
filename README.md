@@ -6,6 +6,12 @@
 
 > 把学习变成证据，把选择变成实验，把工作变成下一次选择的起点。
 
+## 下载
+
+- **最新编译版（PDF）**：[Releases · latest](https://github.com/returnSGD/campus2offer/releases/latest)
+- 直链：`https://github.com/returnSGD/campus2offer/releases/latest/download/campus2offer-latest.pdf`
+
+每次 `main` 有更新，CI 会重新编译并把 PDF 传到这个 release（标题带“自动更新”，同时保留一份中文文件名）。
 这本书写给计算机大类的高中生、本科生和应届生：从选专业、看培养方案、做第一个真实项目，到写简历、面试、选 offer、入职前九十天。它不承诺 offer，只提供一套更可靠的工作方式——**先把问题说清楚，做一个成本可承受的实验，进入真实环境，记录结果，再根据证据调整方向**。
 
 ## 这本书里有什么
